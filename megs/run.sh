@@ -56,27 +56,42 @@ while read input
 do
 	mkdir -p $inputDir
 	mkdir -p $outputDir
+
+	cd $inputDir
 	
 	ciop-log "INFO" "Working with file $input"
-	file=`ciop-copy -o $inputDir -U $input`
+	file=`ciop-copy -o . $input`
 
 	ciop-log "DEBUG" "ciop-copy output is $file"
+	
+	if [ ! -z "$file" ]
+	then
+		file=`basename $file`
 
-	file=`basename $file`
+		#prepares the environment
+		ciop-log "DEBUG" "copying templates to megsdir"
+		cp -Rv /usr/local/MEGS_8.1/templates/* $megsDir
+		sed -i "s#inputfile: #inputfile: $inputDir/$file#g" $megsDir/job.conf
 
-	#prepares the environment
-	ciop-log "DEBUG" "copying templates to megsdir"
-	cp -Rv /usr/local/MEGS_8.1/templates $megsDir
-	sed -i 's#inputfile: #inputfile: $inputDir/$file#g' $megsDir/job.conf
+		sed -i "s#export DATABASE_DIR=.*#export DATABASE_DIR=${TMPDIR}/megs/run/database#g" ${TMPDIR}/megs/run/run_megs.sh
 
+		ciop-log "INFO" "Starting megs processor"
+		cd $megsDir/run
+		sh -x run_megs.sh $inputDir/$file	
 
-	ciop-log "INFO" "Starting megs processor"
-	cd $megsDir/run
-	sh -x run_megs.sh $inputDir/$file	
+		ciop-log "DEBUG" "`ls -l`"
 
-	cd $outputDir
-	ciop-log "INFO" "Publishing output"
-	ciop-publish -m *.N1
+		cd $outputDir
+		ciop-log "INFO" "Publishing output"
+		ciop-log "DEBUG" "`ls -l`"
+		
+		ciop-publish -m $outputDir/*.N1
+
+		ciop-log "DEBUG" "ciop-publish exited with $?"
+
+	else
+		ciop-log "ERROR" "Error ciop-copy output is empty"
+	fi
 
 	#clears the directory for the next file
 	rm -rf $megsDir/*
