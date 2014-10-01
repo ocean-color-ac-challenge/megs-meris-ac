@@ -46,7 +46,7 @@ ciop-log "DEBUG" "Megs dir: ${TMPDIR}/megs"
 ciop-log "DEBUG" "Input dir: ${TMPDIR}/megs/input"
 ciop-log "DEBUG" "Output dir: ${TMPDIR}/megs/output"
 
-megsDir=${TMPDIR}/megs
+megsDir=${TMPDIR}/megs/processors/MEGS_8.1/
 inputDir=${megsDir}/input
 outputDir=${megsDir}/output
 
@@ -54,6 +54,7 @@ mkdir -p $megsDir
 
 while read input
 do
+	#environment setup
 	mkdir -p $inputDir
 	mkdir -p $outputDir
 
@@ -70,22 +71,30 @@ do
 
 		#prepares the environment
 		ciop-log "DEBUG" "copying templates to megsdir"
-		cp -Rv /usr/local/MEGS_8.1/templates/* $megsDir
-		sed -i "s#inputfile: #inputfile: $inputDir/$file#g" $megsDir/job.conf
+		mkdir -p ${megsDir}/configurations/Reference_Configuration
+		cd ${megsDir}/configurations/Reference_Configuration
+		cp -Rv /usr/local/MEGS_8.1/configurations/Reference_Configuration/resources .
+		cp -Rv /usr/local/MEGS_8.1/configurations/Reference_Configuration/configuration.conf .
+		mkdir -p job_groups/myjob
+		cd job_groups/myjob
+		cp -Rv /usr/local/MEGS_8.1/templates/* .
+	
+		sed -i "s#inputfile: #inputfile: $inputDir/$file#g" $megsDir/configurations/Reference_Configuration/job_groups/myjob/job.conf
 
-		sed -i "s#export DATABASE_DIR=.*#export DATABASE_DIR=${TMPDIR}/megs/run/database#g" ${TMPDIR}/megs/run/run_megs.sh
+		sed -i "s#export DATABASE_DIR=.*#export DATABASE_DIR=$megsDir/configurations/Reference_Configuration/job_groups/myjob/run/database#g" $megsDir/configurations/Reference_Configuration/job_groups/myjob/run/run_megs.sh
 
 		ciop-log "INFO" "Starting megs processor"
-		cd $megsDir/run
-		sh -x run_megs.sh $inputDir/$file	
-
-		ciop-log "DEBUG" "`ls -l`"
+		cd $megsDir/configurations/Reference_Configuration/job_groups/myjob/run
+		sh run_megs.sh $inputDir/$file
+		#mv ../output/*.nc ${outputDir}/
+		mv ../output*.N1 ${outputDir}/
 
 		cd $outputDir
 		ciop-log "INFO" "Publishing output"
-		ciop-log "DEBUG" "`ls -l`"
 		
+		#ciop-publish -m $outputDir/*.nc
 		ciop-publish -m $outputDir/*.N1
+		
 
 		ciop-log "DEBUG" "ciop-publish exited with $?"
 
@@ -94,5 +103,7 @@ do
 	fi
 
 	#clears the directory for the next file
-	rm -rf $megsDir/*
+	#rm -rf $megsDir/*
 done
+
+cp -Rv ${TMPDIR}/megs /tmp
