@@ -19,11 +19,11 @@
     <node id="node_megs">
       <job id="megs" />
       <sources>
-        <source id="data" refid="cas:series">http://catalogue.terradue.int/catalogue/search/MER_FRS_1P/description</source>
+        <source id="data" refid="cas:series">http://catalogue.terradue.int/catalogue/search/MER_RR__1P/description</source>
       </sources>
       <parameters>
-      	<parameter id="starttime">2007-07-17T15:24:00.000Z</parameter>
-      	<parameter id="enddate">2007-07-17T15:26:07.000Z</parameter>
+      	<parameter id="starttime">2006-07-12T17:15:05.000Z</parameter>
+      	<parameter id="enddate">2006-07-12T17:16:12.000Z</parameter>
       	<parameter id="bbox">-180,90,180,-90</parameter>
       </parameters>
     </node>
