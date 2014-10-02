@@ -49,6 +49,7 @@ ciop-log "DEBUG" "Output dir: ${TMPDIR}/megs/output"
 megsDir=${TMPDIR}/megs/processors/MEGS_8.1/
 inputDir=${megsDir}/input
 outputDir=${megsDir}/output
+prdurls="`ciop-getparam prdurls`"
 
 mkdir -p $megsDir
 
@@ -69,6 +70,8 @@ do
 	then
 		file=`basename $file`
 
+		filetype=`echo $file | cut -c 1-10`
+
 		#prepares the environment
 		ciop-log "DEBUG" "copying templates to megsdir"
 		mkdir -p ${megsDir}/configurations/Reference_Configuration
@@ -78,32 +81,27 @@ do
 		mkdir -p job_groups/myjob
 		cd job_groups/myjob
 		cp -Rv /usr/local/MEGS_8.1/templates/* .
+		
+		#sets the correct modifiers.db and value.txt
+		cp run/value.${filetype}.txt run/value.txt
+		cp run/modifiers.${filetype}.db run/modifiers.db
 	
 		sed -i "s#inputfile: #inputfile: $inputDir/$file#g" $megsDir/configurations/Reference_Configuration/job_groups/myjob/job.conf
-
 		sed -i "s#export DATABASE_DIR=.*#export DATABASE_DIR=$megsDir/configurations/Reference_Configuration/job_groups/myjob/run/database#g" $megsDir/configurations/Reference_Configuration/job_groups/myjob/run/run_megs.sh
 
 		ciop-log "INFO" "Starting megs processor"
 		cd $megsDir/configurations/Reference_Configuration/job_groups/myjob/run
-		sh run_megs.sh $inputDir/$file
-		#mv ../output/*.nc ${outputDir}/
-		mv ../output*.N1 ${outputDir}/
+		ln -s ${outputDir} output
+		sh run_megs.sh "$inputDir/$file" "$prdurls"
 
 		cd $outputDir
 		ciop-log "INFO" "Publishing output"
-		
-		#ciop-publish -m $outputDir/*.nc
-		ciop-publish -m $outputDir/*.N1
-		
-
+		ciop-publish -m $outputDir/*.*
 		ciop-log "DEBUG" "ciop-publish exited with $?"
-
 	else
 		ciop-log "ERROR" "Error ciop-copy output is empty"
 	fi
 
 	#clears the directory for the next file
-	#rm -rf $megsDir/*
+	rm -rf $megsDir/*
 done
-
-cp -Rv ${TMPDIR}/megs /tmp
