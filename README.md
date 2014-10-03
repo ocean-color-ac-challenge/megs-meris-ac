@@ -55,7 +55,7 @@ Or invoke the Web Processing Service via the Sandbox dashboard providing a start
 
 To learn more and find information go to 
 
-* [Developer Cloud Sandbox](http://docs.terradue.com/developer) service 
+* [Developer Cloud Sandbox](http://docs.terradue.com/developer-sandbox) service 
 
 ### Authors (alphabetically)
 
