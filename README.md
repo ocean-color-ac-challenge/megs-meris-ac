@@ -13,12 +13,30 @@ To run this application, you will need a Developer Cloud Sandbox that can be req
 
 ### Installation
 
-Log on the developer sandbox and run these commands in a shell:
+You can install the application in two ways, via rpm or via mvn
 
-* Install **megs**
+* Download and install via rpm
+
+Click on the latest release available in the releases page, then copy the file to your sandbox:
 
 ```bash
-sudo yum install megs-meris-ac
+scp megs-meris-ac-0.1-ciop.noarch.rpm <your sandbox ip>:
+```
+Log on the developer sandbox and run this command in a shell:
+
+```bash
+sudo yum -y install megs-meris-ac
+```
+
+* install via mvn
+
+Log on the developer sandbox and run these commands in a shell:
+
+```bash
+sudo yum -y install megs
+git clone git@github.com:ocean-color-ac-challenge/megs-meris-ac.git
+cd megs-meris-ac
+mvn install
 ```
 
 This will install the megs-meris-ac application and the megs processor from ESA.
