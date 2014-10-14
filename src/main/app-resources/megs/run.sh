@@ -12,8 +12,8 @@ export LC_ALL="en_US.UTF-8"
 
 # define the exit codes
 SUCCESS=0
-ERR_NOINPUT=1
-
+ERR_NOINPUT=3
+ERR_MEGS=5
 # add a trap to exit gracefully
 function cleanExit ()
 {
