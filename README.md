@@ -1,17 +1,14 @@
-## MEGS(c) MERIS Level 1 to Level 2 atmospheric correction
-
-
-### MERIS atmospheric correction effects using MEGS(c)
+## MERIS atmospheric correction effects using MEGS(c)
 
 This tutorial builds upon the ESA ODESA (Optical Data Processor of the European Space Agency) project. More context information is available from the [project web page](http://earth.eo.esa.int/odesa/).
 
-Hereafter, we will guide you to implement a "MERIS Level 1 to Level 2 atmospheric correction using ODESA" application on Terradue's Cloud Platform, a set of Cloud services to develop, test and exploit scalable, distributed earth data processors.
-
 ### Getting started
+
+The Getting started guide to implement a "MERIS Level 1 to Level 2 atmospheric correction using MEGS(c)" application on Terradue's Developer Cloud Sandbox platform, a set of Cloud services to develop, test and exploit scalable, distributed Earth Science processors.
 
 To run this application, you will need a Developer Cloud Sandbox that can be requested from [Terradue's Portal](http://www.terradue.com/partners), provided user registration approval. 
 
-### Installation
+#### Installation
 
 You can install the application in two ways, via mvn or via rpm
 
@@ -41,7 +38,7 @@ Log on the developer sandbox and run this command in a shell:
 sudo yum -y install megs-meris-ac
 ```
 
-### Submitting the workflow
+#### Submitting the workflow
 
 Run this command in a shell:
 
@@ -51,7 +48,7 @@ ciop-simwf
 
 Or invoke the Web Processing Service via the Sandbox dashboard providing a start/stop date in the format YYYY/MM/DD (e.g. 2012-04-01 and 2012-04-03) and a bounding box (upper left lat/lon, lower right lat/lon).
 
-### Using custom ADF
+#### Using custom ADF
 
 You can use ODESA to create a new set of ADFs. 
 
