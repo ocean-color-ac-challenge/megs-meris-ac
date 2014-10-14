@@ -4,7 +4,7 @@
     <jobTemplate id="megs">
       <streamingExecutable>/application/megs/run.sh</streamingExecutable>
       <defaultParameters>
-        <parameter id="prdurls" title="PRD URLs (optional)" abstract="PRD URLs" scope="test" />
+        <parameter id="prdurls" title="PRD URLs (optional)" abstract="PRD URLs" scope="runtime" />
 	<parameter id="starttime" title="Start Time" abstract="Start Time to query the Catalogue" scope="runtime" type="opensearch" target="time:start" />
 	<parameter id="enddate" title="End time" abstract="End time to query the Catalogue" scope="runtime" type="opensearch" target="time:end" />
 	<parameter id="bbox" title="Bounding Box" abstract="Bounding Box to query the Catalogue" scope="runtime" type="opensearch" target="geo:box" />
