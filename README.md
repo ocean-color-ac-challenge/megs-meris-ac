@@ -57,10 +57,15 @@ You can use ODESA to create a new set of ADFs.
 
 Section 3.4.4 of the ODESA Quick Start Guide (ODESA-ACR-QSG issue 1.2.4 of March 5, 2012) shows how to edit the ADFs:
 
-> New ADFs created and modified by the user are placed in the working directory. The general directory structure is as follows:
-$WORKING_DIRECTORY/auxdatafiles/<processor_type>/<adf_format>/<adf_type>
-For example a new ADF for the atmosphere products using the default name (atmosphere_copy.prd) would be found under:
-$WORKING_DIRECTORY/auxdatafiles/megs/20/atmosphere_copy.prd 
+> New ADFs created and modified by the user are placed in the working directory. 
+
+> The general directory structure is as follows:
+
+> $WORKING_DIRECTORY/auxdatafiles/(processor_type)/(adf_format)/(adf_type)
+
+> For example a new ADF for the atmosphere products using the default name (atmosphere_copy.prd) would be found under:
+
+> $WORKING_DIRECTORY/auxdatafiles/megs/20/atmosphere_copy.prd 
 
 * Provide an compressed archive of the auxdatafiles folder with:
 
