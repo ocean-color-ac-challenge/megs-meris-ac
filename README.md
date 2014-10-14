@@ -13,20 +13,7 @@ To run this application, you will need a Developer Cloud Sandbox that can be req
 
 ### Installation
 
-You can install the application in two ways, via rpm or via mvn
-
-* Download and install via rpm
-
-Click on the latest release available in the releases page, then copy the file to your sandbox:
-
-```bash
-scp megs-meris-ac-0.1-ciop.noarch.rpm <your sandbox ip>:
-```
-Log on the developer sandbox and run this command in a shell:
-
-```bash
-sudo yum -y install megs-meris-ac
-```
+You can install the application in two ways, via mvn or via rpm
 
 * install via mvn
 
@@ -41,6 +28,19 @@ mvn install
 
 This will install the megs-meris-ac application and the megs processor from ESA.
 
+* Download and install via rpm
+
+Click on the latest release available in the releases page, then copy the file to your sandbox:
+
+```bash
+scp megs-meris-ac-0.1-ciop.noarch.rpm <your sandbox ip>:
+```
+Log on the developer sandbox and run this command in a shell:
+
+```bash
+sudo yum -y install megs-meris-ac
+```
+
 ### Submitting the workflow
 
 Run this command in a shell:
@@ -51,6 +51,35 @@ ciop-simwf
 
 Or invoke the Web Processing Service via the Sandbox dashboard providing a start/stop date in the format YYYY/MM/DD (e.g. 2012-04-01 and 2012-04-03) and a bounding box (upper left lat/lon, lower right lat/lon).
 
+### Using custom ADF
+
+You can use ODESA to create a new set of ADFs. 
+
+Section 3.4.4 of the ODESA Quick Start Guide (ODESA-ACR-QSG issue 1.2.4 of March 5, 2012) shows how to edit the ADFs:
+
+> New ADFs created and modified by the user are placed in the working directory. The general directory structure is as follows:
+$WORKING_DIRECTORY/auxdatafiles/<processor_type>/<adf_format>/<adf_type>
+For example a new ADF for the atmosphere products using the default name (atmosphere_copy.prd) would be found under:
+$WORKING_DIRECTORY/auxdatafiles/megs/20/atmosphere_copy.prd 
+
+* Provide an compressed archive of the auxdatafiles folder with:
+
+```bash
+cd $WORKING_DIRECTORY
+tar cvfz auxdatafiles.tgz auxdatafiles
+```
+
+* Upload the auxdatafiles.tgz archive to your sandbox with:
+
+```bash
+scp auxdatafiles.tgz <sandbox ip>:/tmp
+```
+
+* Invoke MEGS application:
+
+  * via the WPS web interface with the parameter: *file:///tmp/auxdatafiles.tgz*
+  * edit the application.xml and set the *prdurl* parameter value to *file:///tmp/auxdatafiles.tgz*; do a ciop-simwf
+
 ### Community and Documentation
 
 To learn more and find information go to 
@@ -59,6 +88,7 @@ To learn more and find information go to
 
 ### Authors (alphabetically)
 
+* Fabrice Brito
 * Fabio D'Andria
 
 ### License
