@@ -40,7 +40,9 @@ ciop-log "DEBUG" "Output dir: ${TMPDIR}/megs/output"
 megsDir=${TMPDIR}/megs/processors/MEGS_8.1/
 inputDir=${megsDir}/input
 outputDir=${megsDir}/output
-prdurls="`ciop-getparam prdurls`"
+
+prdurl="`ciop-getparam prdurl`"
+[ "$prdurl" == "default" ] && prdurl=""
 
 mkdir -p $megsDir
 
@@ -85,7 +87,7 @@ do
 	ciop-log "INFO" "Starting megs processor"
 	cd $megsDir/configurations/Reference_Configuration/job_groups/myjob/run
 	ln -s ${outputDir} output
-	sh run_megs.sh "$inputDir/$file" "$prdurls"
+	sh run_megs.sh "$inputDir/$file" "$prdurl"
 
 	[ $? != 0 ] && exit $ERR_MEGS
 
