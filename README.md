@@ -71,7 +71,7 @@ cd $WORKING_DIRECTORY
 tar cvfz auxdatafiles.tgz auxdatafiles
 ```
 
-> Chech [here](assets/auxdatafiles) the typical content of $WORKING_DIRECTORY/auxdatafiles
+> Check [here](assets/auxdatafiles) the typical content of $WORKING_DIRECTORY/auxdatafiles
 
 * Upload the auxdatafiles.tgz archive to your sandbox with:
 
