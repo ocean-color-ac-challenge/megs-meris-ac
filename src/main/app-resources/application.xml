@@ -25,6 +25,7 @@
       	<parameter id="starttime">2006-07-12T17:15:05.000Z</parameter>
       	<parameter id="enddate">2006-07-12T17:16:12.000Z</parameter>
       	<parameter id="bbox">-180,90,180,-90</parameter>
+      	<parameter id="prdurl">default</parameter>
       </parameters>
     </node>
   </workflow>
