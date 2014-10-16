@@ -66,7 +66,7 @@ do
 	cd $inputDir
 	
 	ciop-log "INFO" "Working with file $input"
-	file=`ciop-copy -o . $input`
+	file=`echo $input | ciop-copy -o . -`
 	[ $? != 0 ] && exit $ERR_NOINPUT
 	
 	# checks if it's a RR, FR or FRS
@@ -95,7 +95,7 @@ do
 	ln -s ${outputDir} output
 
 	ciop-log "INFO" "Starting megs processor"
-	sh run_megs.sh "$inputDir/$file" $prdurl 
+	sh run_megs.sh "$file" $prdurl 
 
 	[ $? != 0 ] && exit $ERR_MEGS
 
