@@ -36,10 +36,6 @@ function cleanExit ()
 
 trap cleanExit EXIT
 
-ciop-log "DEBUG" "Megs dir: ${TMPDIR}/megs"
-ciop-log "DEBUG" "Input dir: ${TMPDIR}/megs/input"
-ciop-log "DEBUG" "Output dir: ${TMPDIR}/megs/output"
-
 megsDir=${TMPDIR}/megs/processors/MEGS_8.1/
 inputDir=${megsDir}/input
 outputDir=${megsDir}/output
