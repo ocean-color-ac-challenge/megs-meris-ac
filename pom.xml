@@ -9,6 +9,39 @@
 	<description>MEGS-MERIS_AC</description>
 	<version>0.2-SNAPSHOT</version>
 
+	<dependencies>
+		<dependency>
+<groupId>org.esa.beam</groupId>
+<artifactId>beam-gpf</artifactId>
+<version>5.0</version>
+</dependency>
+<dependency>
+<groupId>org.esa.beam</groupId>
+<artifactId>beam-envisat-reader</artifactId>
+<version>5.0</version>
+</dependency>
+<dependency>
+<groupId>org.esa.beam</groupId>
+<artifactId>beam-geotiff</artifactId>
+<version>5.0</version>
+</dependency>
+<dependency>
+<groupId>org.esa.beam</groupId>
+<artifactId>beam-binning</artifactId>
+<version>5.0</version>
+</dependency>	
+<dependency>
+<groupId>org.esa.beam</groupId>
+<artifactId>beam-pconvert</artifactId>
+<version>5.0</version>
+</dependency>
+<dependency>
+<groupId>ncsa.hdf</groupId>
+<artifactId>lib-hdf</artifactId>
+<version>2.7</version>
+</dependency>
+	</dependencies>
+
 	<scm>
 		<connection>scm:git:git@github.com:ocean-color-ac-challenge/megs-meris-ac.git</connection>
 		<developerConnection>scm:git:git@github.com:ocean-color-ac-challenge/megs-meris-ac.git</developerConnection>
@@ -24,6 +57,34 @@
 	</properties>
 
 	<repositories>
+		<repository>
+<id>bc-mvn</id>
+<name>Public Maven Repository at Brockmann Consult</name>
+<url>http://www.brockmann-consult.de/mvn/os</url>
+<releases>
+<enabled>true</enabled>
+<checksumPolicy>warn</checksumPolicy>
+</releases>
+<snapshots>
+<enabled>true</enabled>
+<checksumPolicy>warn</checksumPolicy>
+</snapshots>
+</repository>
+<repository>
+<id>maven2-repository.dev.java.net</id>
+<name>Java.net repository</name>
+<url>http://download.java.net/maven/2</url>
+</repository>
+<repository>
+<id>maven-repository.unidata.ucar.edu</id>
+<name>Unidata Repository</name>
+<url>http://artifacts.unidata.ucar.edu/content/repositories/unidata-releases</url>
+</repository>
+<repository>
+<id>osgeo</id>
+<name>Open Source Geospatial Foundation Repository</name>
+<url>http://download.osgeo.org/webdav/geotools/</url>
+</repository>
 		<repository>
 			<id>repository.terradue.com</id>
 			<name>repository.terradue.com-releases</name>
@@ -45,6 +106,13 @@
 	</pluginRepositories>
 
 	<build>
+	<extensions>
+<extension>
+<groupId>org.apache.maven.wagon</groupId>
+<artifactId>wagon-ssh</artifactId>
+<version>1.0</version>
+</extension>
+</extensions>
 		<plugins>
 			<plugin>
 				<artifactId>maven-clean-plugin</artifactId>
@@ -61,6 +129,17 @@
 					</filesets>
 				</configuration>
 			</plugin>
+
+<plugin>
+<artifactId>maven-compiler-plugin</artifactId>
+<version>3.1</version>
+<configuration>
+<encoding>UTF-8</encoding>
+<excludes>
+<exclude>.gitignore</exclude>
+</excludes>
+</configuration>
+</plugin>
 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
