@@ -10,9 +10,40 @@ To run this application, you will need a Developer Cloud Sandbox that can be req
 
 #### Installation
 
+Log on the developer sandbox and run these commands in a shell:
+
+* Install **Java 7**
+
+```bash
+sudo yum install -y java-1.7.0-openjdk
+```
+
+* Select Java 7
+
+```bash
+sudo /usr/sbin/alternatives --config java
+```
+This will show on the terminal window:
+
+```
+There are 3 programs which provide 'java'.
+
+  Selection    Command
+-----------------------------------------------
+ + 1           /usr/java/jdk1.6.0_35/jre/bin/java
+   2           /usr/lib/jvm/jre-1.5.0-gcj/bin/java
+*  3           /usr/lib/jvm/jre-1.7.0-openjdk.x86_64/bin/java
+
+Enter to keep the current selection[+], or type selection number:
+```
+
+Select java 1.7 out of the menu options by typing the correct number (here it's *3*).
+
+* Install this application
+
 You can install the application in two ways, via mvn or via rpm
 
-* install via mvn
+ * install via mvn
 
 Log on the developer sandbox and run these commands in a shell:
 
@@ -25,7 +56,7 @@ mvn install
 
 This will install the megs-meris-ac application and the megs processor from ESA.
 
-* Download and install via rpm
+ * Download and install via rpm
 
 Click on the latest release available in the releases page, then copy the file to your sandbox:
 
