@@ -90,7 +90,6 @@ do
 	sed -i "s#inputfile: #inputfile: $file#g" $megsDir/configurations/Reference_Configuration/job_groups/myjob/job.conf
 	sed -i "s#export DATABASE_DIR=.*#export DATABASE_DIR=$megsDir/configurations/Reference_Configuration/job_groups/myjob/run/database#g" $megsDir/configurations/Reference_Configuration/job_groups/myjob/run/run_megs.sh
 
-	ciop-log "INFO" "Starting megs processor"
 	cd $megsDir/configurations/Reference_Configuration/job_groups/myjob/run
 	ln -s ${outputDir} output
 
