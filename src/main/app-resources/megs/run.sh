@@ -15,6 +15,8 @@ SUCCESS=0
 ERR_NOINPUT=3
 ERR_NOADF=4
 ERR_MEGS=5
+ERR_PCONVERT=8
+ERR_TAR=10
 
 # add a trap to exit gracefully
 function cleanExit ()
@@ -26,6 +28,8 @@ function cleanExit ()
 		$ERR_NOINPUT)	msg="Input not retrieved to local node";;
 		$ERR_MEGS)	msg="megs returned an error";;
 		$ERR_NOADF)	msg="Could not retrieve custom ADF";;
+		$ERR_PCONVERT)	msg="Conversion to BEAM-DIMAP failed";;
+		$ERR_TAR)	msg="Compression of BEAM-DIMAP failed";;
 		*)		msg="Unknown error";;
 	esac
 
@@ -94,11 +98,21 @@ do
 	sh run_megs.sh "$file" $prdurl 
 
 	[ $? != 0 ] && exit $ERR_MEGS
+	
+	ciop-log "INFO" "Conversion to BEAM-DIMAP format"
+	l2="`find $outputDir -type f -name "MER*.N1"`"
+	ciop-log "DEBUG" "found: $l2"
+	/application/shared/bin/pconvert.sh --outdir $outputDir $l2	
+	
+	[ $? != 0 ] && exit $ERR_PCONVERT
 
-	#cd $outputDir
-	ciop-log "INFO" "Publishing output"
-	find $outputDir -type f -exec gzip \{\} \;
-	ciop-publish -m $outputDir/*
+	ciop-log "INFO" "Compressing results"
+	tar -C $outputDir -cvzf $l2.tgz `basename $l2 | sed 's#\.N1$#.dim#g'` `basename $l2 | sed 's#\.N1$#.data#g'`
+	[ $? != 0 ] && exit $ERR_TAR	
+
+	#publishing the output
+	ciop-log "INFO" "Publishing `basename $l2`.tgz"
+	ciop-publish -m $l2.tgz 
 
 	#clears the directory for the next file
 	rm -rf $megsDir/*
