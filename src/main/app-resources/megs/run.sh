@@ -17,6 +17,7 @@ ERR_NOADF=4
 ERR_MEGS=5
 ERR_PCONVERT=8
 ERR_TAR=10
+ERR_JAVAVERSION=15
 
 # add a trap to exit gracefully
 function cleanExit ()
@@ -30,6 +31,7 @@ function cleanExit ()
 		$ERR_NOADF)	msg="Could not retrieve custom ADF";;
 		$ERR_PCONVERT)	msg="Conversion to BEAM-DIMAP failed";;
 		$ERR_TAR)	msg="Compression of BEAM-DIMAP failed";;
+		 $ERR_JAVAVERSION) msg="The version of the JVM must be at least 1.7";;
 		*)		msg="Unknown error";;
 	esac
 
@@ -39,6 +41,10 @@ function cleanExit ()
 }
 
 trap cleanExit EXIT
+
+ciop-log "INFO" "Checking Java version"
+$_CIOP_APPLICATION_PATH/shared/bin/detect_java.sh
+[ "$?" == "0" ] || exit $ERR_JAVAVERSION
 
 megsDir=${TMPDIR}/megs/processors/MEGS_8.1/
 inputDir=${megsDir}/input
